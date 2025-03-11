@@ -48,7 +48,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/reactApp/src:/app/src
+      - ./nginx/reactApp/src:/app
     depends_on:
       flask:
         condition: service_started
