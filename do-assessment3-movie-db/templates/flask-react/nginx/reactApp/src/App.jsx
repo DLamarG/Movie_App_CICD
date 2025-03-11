@@ -11,6 +11,8 @@ function App() {
   const [getMovieId, setGetMovieId] = useState('');
   const [fetchedMovie, setFetchedMovie] = useState(null);
   const [updateMovie, setUpdateMovie] = useState({ id: '', title: '', director: '', year: '' });
+  
+  console.log("API_URL :", API_URL);
 
   const fetchMovies = async () => {
     const res = await fetch(`${API_URL}/movies`);
