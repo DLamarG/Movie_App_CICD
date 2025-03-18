@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: movies_db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: backend_api
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      CONNECTION_STRING: postgres://user:password@postgres:5432/movies_db
+    ports:
+      - "3001:3001"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_web
+    restart: always
+    depends_on:
+      - backend
+    environment:
+      API_URL: http://backend:3001/data
+    ports:
+      - "3000:3000"
+
+volumes:
+  pg_data:
